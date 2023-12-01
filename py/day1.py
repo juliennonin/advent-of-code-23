@@ -14,26 +14,21 @@ DIGITS = {
     "eight": "8",
     "nine": "9",
 }
-
-
-# %%
-def replace_spelled_digits(line):
-    for spelled_digit, digit in DIGITS.items():
-        # Both sides are kept in case of portmeanteaus
-        # For example "eightwone" → "eight8eightwo2twone1one"
-        line = line.replace(spelled_digit, f"{spelled_digit}{digit}{spelled_digit}")
-    return line
+DIGITS_PATTERN = rf"\d|{'|'.join(DIGITS.keys())}"
+DIGITS_PATTERN_INV = rf"\d|{'|'.join(digit[::-1] for digit in DIGITS.keys())}"
 
 
 # %%
 def find_calibration_values(data, with_spelled_digits):
     calibration_values = []
+    pattern = DIGITS_PATTERN if with_spelled_digits else r"\d"
+    pattern_inv = DIGITS_PATTERN_INV if with_spelled_digits else r"\d"
     for line in data:
-        if with_spelled_digits:
-            line = replace_spelled_digits(line)
+        match1 = re.search(pattern, line).group()  # first digit
+        match2 = re.search(pattern_inv, line[::-1]).group()[::-1]  # last digit
 
-        v1 = re.search(r"\d", line).group()  # first digit
-        v2 = re.search(r"\d", line[::-1]).group()  # last digit
+        v1 = DIGITS.get(match1, match1)
+        v2 = DIGITS.get(match2, match2)
         calibration_values.append(int(v1 + v2))
 
     return sum(calibration_values)
