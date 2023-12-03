@@ -1,2 +1,8 @@
 .env
+.vscode/
+
+# py
 __pycache__
+
+# rs
+/target
