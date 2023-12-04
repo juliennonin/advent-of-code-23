@@ -44,7 +44,7 @@ fn is_game_possible(minimum_set: BallsSet) -> bool {
 }
 
 fn main() {
-    let games: Vec<(i32, BallsSet)> = include_str!("../data/day2.txt")
+    let games: Vec<(i32, BallsSet)> = include_str!("../data/day02.txt")
         .lines()
         .map(|line| parse_game(line))
         .collect();
