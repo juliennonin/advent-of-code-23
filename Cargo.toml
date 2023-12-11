@@ -12,3 +12,8 @@ itertools = "0.12.0"
 [[bin]]
 name = "day02"
 path = "./rs/day02.rs"
+
+[[bin]]
+name = "day04"
+path = "./rs/day04.rs"
+
